@@ -913,11 +913,13 @@ class gradingform_rubric_instance extends gradingform_instance {
         if ($options['lockzeropoints']) {
             // Grade calculation method when 0-level is locked.
             $grade = max($mingrade, $curscore / $scores['maxscore'] * $maxgrade);
-            return $allowdecimals ? $grade : round($grade, 0);
+            // return $allowdecimals ? $grade : round($grade, 0); // Matt edit
+            return floor($grade);
         } else {
             // Alternative grade calculation method.
             $gradeoffset = ($curscore - $scores['minscore']) / ($scores['maxscore'] - $scores['minscore']) * ($maxgrade - $mingrade);
-            return ($allowdecimals ? $gradeoffset : round($gradeoffset, 0)) + $mingrade;
+            // return ($allowdecimals ? $gradeoffset : round($gradeoffset, 0)) + $mingrade; // Matt edit
+            return floor($gradeoffset) + $mingrade;
         }
     }
 
